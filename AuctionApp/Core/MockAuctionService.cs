@@ -9,9 +9,9 @@ public class MockAuctionService : IAuctionService
         DateTime now = DateTime.Now;
 
         Auction a1 = new Auction(1, "Gaming laptop", "Laptop with 16 GB RAM.",
-            "ibbe@kth.se", 4000, now.AddDays(1), new List<Bid>());
+            "iawad@kth.se", 4000, now.AddDays(1), new List<Bid>());
         Auction a2 = new Auction(2, "Mountain bike", "Used mountain bike, 21 gears.",
-            "anna@kth.se", 500, now.AddDays(3), new List<Bid>());
+            "wajeed@kth.se", 500, now.AddDays(3), new List<Bid>());
 
         List<Auction> auctions = new List<Auction>();
         auctions.Add(a1);
