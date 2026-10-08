@@ -12,6 +12,7 @@ Lab 2 in HI1031 Distributed Information Systems at KTH.
 - MySQL
 
 ## Architecture
+![Architecture diagram](docs/architecture.png)
 
 Three-layer architecture with dependency injection between the layers:
 
