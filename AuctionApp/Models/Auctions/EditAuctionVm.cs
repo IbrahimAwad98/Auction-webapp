@@ -11,7 +11,7 @@ public class EditAuctionVm
     [StringLength(2000)]
     public string Description { get; set; } = "";
 
-    public EditAuctionVm FromAuction(Auction auction)
+    public static EditAuctionVm FromAuction(Auction auction)
     {
         EditAuctionVm vm = new EditAuctionVm();
         vm.Id = auction.Id;
