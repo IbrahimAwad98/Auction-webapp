@@ -1,0 +1,33 @@
+@model List<AuctionApp.Models.Auctions.AuctionVm>
+
+@{
+    ViewData["Title"] = "Won auctions";
+}
+
+<h1>Won auctions</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Seller</th>
+        <th>Final price</th>
+        <th>Ended</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var auction in Model)
+    {
+        <tr>
+            <td>@auction.Name</td>
+            <td>@auction.OwnerUserName</td>
+            <td>@auction.CurrentPrice</td>
+            <td>@auction.EndTime</td>
+            <td>
+                <a href="/Auctions/Details/@auction.Id">Details</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

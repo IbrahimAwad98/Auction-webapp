@@ -27,7 +27,13 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Auctions" asp-action="Index">Auctions</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">About</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Auctions" asp-action="MyBids">My Bids</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Auctions" asp-action="Won">Won</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
                     </li>
                 </ul>
             </div>
@@ -42,7 +48,7 @@
 
 <footer class="border-top footer text-muted">
     <div class="container">
-        &copy; 2026 - AuctionApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">KTH</a>
+        &copy; 2026 - AuctionApp - <a asp-area="" asp-controller="Home" asp-action="About">KTH</a>
     </div>
 </footer>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>

@@ -1,30 +1,37 @@
 @model List<AuctionApp.Models.Auctions.AuctionVm>
+
 @{
-    ViewData["Title"] = "Auctions";
+    ViewData["Title"] = "Active auctions";
 }
 
 <h1>Active auctions</h1>
 
+<p>
+    <a href="/Auctions/Create">Create new auction</a>
+</p>
+
 <table class="table">
     <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Owner</th>
-            <th>Current price (Kr)</th>
-            <th>End time</th>
-        </tr>
+    <tr>
+        <th>Name</th>
+        <th>Seller</th>
+        <th>Current price</th>
+        <th>Ends</th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var auction in Model)
-        {
-            <tr>
-                <td>@auction.Id</td>
-                <td>@auction.Name</td>
-                <td>@auction.OwnerUserName</td>
-                <td>@auction.CurrentPrice</td>
-                <td>@auction.EndTime</td>
-            </tr>
-        }
+    @foreach (var auction in Model)
+    {
+        <tr>
+            <td>@auction.Name</td>
+            <td>@auction.OwnerUserName</td>
+            <td>@auction.CurrentPrice</td>
+            <td>@auction.EndTime</td>
+            <td>
+                <a href="/Auctions/Details/@auction.Id">Details</a>
+            </td>
+        </tr>
+    }
     </tbody>
 </table>

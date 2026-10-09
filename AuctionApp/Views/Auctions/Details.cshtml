@@ -1,0 +1,72 @@
+@model AuctionApp.Models.Auctions.AuctionDetailsVm
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<h1>@Model.Name</h1>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<dl class="row">
+    <dt class="col-sm-3">Seller</dt>
+    <dd class="col-sm-9">@Model.OwnerUserName</dd>
+    <dt class="col-sm-3">Description</dt>
+    <dd class="col-sm-9">@Model.Description</dd>
+    <dt class="col-sm-3">Starting price</dt>
+    <dd class="col-sm-9">@Model.StartingPrice</dd>
+    <dt class="col-sm-3">Current price</dt>
+    <dd class="col-sm-9">@Model.CurrentPrice</dd>
+    <dt class="col-sm-3">Ends</dt>
+    <dd class="col-sm-9">@Model.EndTime</dd>
+</dl>
+
+@if (Model.IsOwner)
+{
+    <p><a href="/Auctions/Edit/@Model.Id">Edit description</a></p>
+}
+else
+{
+    <form method="post" asp-action="PlaceBid" class="mb-4">
+        <input type="hidden" name="AuctionId" value="@Model.Id" />
+        <div class="mb-2">
+            <label for="Amount" class="form-label">Your bid</label>
+            <input type="number" id="Amount" name="Amount" class="form-control" min="1" step="1" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Place bid</button>
+    </form>
+}
+
+<h2>Bids</h2>
+
+@if (Model.Bids.Count == 0)
+{
+    <p>No bids yet.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Bidder</th>
+            <th>Amount</th>
+            <th>Placed</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var bid in Model.Bids)
+        {
+            <tr>
+                <td>@bid.UserName</td>
+                <td>@bid.Amount</td>
+                <td>@bid.PlacedAt</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+<p><a href="/Auctions">Back to auctions</a></p>
