@@ -2,6 +2,7 @@ using AuctionApp.Core;
 
 namespace AuctionApp.Models.Auctions;
 
+// Lättviktig VM för listan: bara det som visas, så vyn inte beror på Auction direkt.
 public class AuctionVm
 {
     public int Id { get; set; }

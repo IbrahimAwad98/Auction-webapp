@@ -1,8 +1,6 @@
 ﻿namespace AuctionApp.Core;
-/**
- * Auction klass
- * två constructor en för nytt auction och en för befintligt från databas. 
- */
+// Affärsreglerna bor här, inte i controllern, så de kan testas utan webb och databas.
+// "now" skickas in utifrån för att tidsreglerna ska gå att testa deterministiskt.
 public class Auction
 {
     public int Id { get; }
@@ -39,7 +37,7 @@ public class Auction
         EndTime = endTime;
     }
 
-    
+    // Ingen validering här: datan kom från databasen och validerades redan när den sparades.
     public Auction(int id, string name, string description,
         string ownerUserName, decimal startingPrice, DateTime endTime, List<Bid> existingsBids)
     {
@@ -55,7 +53,7 @@ public class Auction
         }
     }
 
-    // Returnerar en kopia
+    // Kopia så ingen utanför kan lägga till bud och kringgå reglerna i PlaceBid.
     public List<Bid> GetBids()
     {
         return new List<Bid>(bids);

@@ -4,6 +4,7 @@ using AuctionApp.Models;
 
 namespace AuctionApp.Controllers;
 
+// Genererad av ASP.NET MVC-mallen, oförändrad.
 public class HomeController : Controller
 {
     public IActionResult Index()

@@ -2,6 +2,8 @@
 
 namespace AuctionApp.Core;
 
+// Kopplar ihop persistens och domänregler så controllern slipper känna till båda.
+// DateTime.Now hämtas här för att Auction/Bid ska förbli tidsoberoende.
 public class AuctionService : IAuctionService
 {
     private readonly IAuctionPersistence persistence;

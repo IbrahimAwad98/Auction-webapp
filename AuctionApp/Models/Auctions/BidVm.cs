@@ -2,6 +2,7 @@
 
 namespace AuctionApp.Models.Auctions;
 
+// Skiljer vyns bud från domänens Bid så vyn kan ändras utan att röra affärslogiken.
 public class BidVm
 {
     public string UserName { get; set; } = "";  //kan vara null

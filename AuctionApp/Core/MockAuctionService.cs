@@ -2,6 +2,7 @@
 
 namespace AuctionApp.Core;
 
+// Hårdkodad data så vyerna kan byggas och visas innan databasen finns (labbens första steg).
 public class MockAuctionService : IAuctionService
 {
     public List<Auction> ListActiveAuctions()

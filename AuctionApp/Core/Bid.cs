@@ -1,8 +1,5 @@
 ﻿namespace AuctionApp.Core;
-/**
- * Bid klass 
- * två constructor en för nytt bud och en för befintligt från databas. 
- */
+// Oföränderlig eftersom ett lagt bud aldrig får ändras i efterhand.
 public class Bid
 {
     public int Id { get; }

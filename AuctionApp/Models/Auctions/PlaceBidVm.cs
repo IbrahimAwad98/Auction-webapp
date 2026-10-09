@@ -2,6 +2,7 @@
 
 namespace AuctionApp.Models.Auctions;
 
+// Egen VM för bud så formulärvalidering sker innan affärsreglerna i AuctionService.
 public class PlaceBidVm
 {
     public int AuctionId { get; set; }

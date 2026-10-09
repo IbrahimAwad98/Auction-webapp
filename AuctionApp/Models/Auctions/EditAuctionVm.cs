@@ -3,6 +3,7 @@ using AuctionApp.Core;
 
 namespace AuctionApp.Models.Auctions;
 
+// Egen VM för redigering eftersom bara beskrivningen får ändras efter att auktionen skapats.
 public class EditAuctionVm
 {
     public int Id { get; set; }

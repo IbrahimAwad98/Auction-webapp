@@ -2,6 +2,7 @@
 namespace AuctionApp.Models.Auctions;
 
 
+// Egen VM för detaljsidan så vyn får pris, ägarskap och bud färdiga utan att känna till domänmodellen.
 public class AuctionDetailsVm
 {
     public int Id { get; set; }

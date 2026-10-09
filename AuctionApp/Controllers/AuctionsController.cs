@@ -7,7 +7,7 @@ namespace AuctionApp.Controllers;
 
 public class AuctionsController : Controller
 {
-    // låg koppling 
+    // Interface istället för konkret klass så mocken kan bytas mot riktig service i DI utan att röra controllern.
     private readonly IAuctionService _auctionService;
 
     public AuctionsController(IAuctionService auctionService)
