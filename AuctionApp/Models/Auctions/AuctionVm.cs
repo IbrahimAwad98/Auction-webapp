@@ -5,11 +5,11 @@ namespace AuctionApp.Models.Auctions;
 public class AuctionVm
 {
     public int Id { get; set; }
-    public string Name { get; set; } = "";
-    public string OwnerUserName { get; set; } = "";
+    public string Name { get; set; }
+    public string OwnerUserName { get; set; }
     public decimal CurrentPrice { get; set; }
     public DateTime EndTime { get; set; }
-
+    
     public static AuctionVm FromAuction(Auction auction)
     {
         AuctionVm vm = new AuctionVm();

@@ -4,7 +4,7 @@
  */
 public interface IAuctionPersistence
 {
-    List<Auction> GetAuctive(DateTime now);
+    List<Auction> GetActive(DateTime now);
     Auction? GetById(int auctionId);
     Auction? GetByIdWithBids(int auctionId);
     List<Auction> GetActiveWithBidBy(string userName, DateTime now);

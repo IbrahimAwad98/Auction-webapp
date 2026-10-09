@@ -5,7 +5,6 @@
 public interface IAuctionService
 {
     List<Auction> ListActiveAuctions();
-    /*
     List<Auction> ListActiveAuctionsWithBidBy(string userName);
     List<Auction> ListAuctionsWonBy(string userName);
     Auction GetAuctionDetails(int auctionId);
@@ -14,5 +13,5 @@ public interface IAuctionService
         DateTime endTime, string userName);
     void UpdateDescription(int auctionId, string newDescription, string userName);
     void PlaceBid(int auctionId, decimal amount, string userName);
-    */
+    
 }

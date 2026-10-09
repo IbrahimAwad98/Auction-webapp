@@ -18,4 +18,42 @@ public class MockAuctionService : IAuctionService
         auctions.Add(a2);
         return auctions;
     }
+    
+    // Resten är inte implementerat i mocken
+    public List<Auction> ListActiveAuctionsWithBidBy(string userName)
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<Auction> ListAuctionsWonBy(string userName)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Auction GetAuctionDetails(int auctionId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Auction GetAuctionForOwner(int auctionId, string userName)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void CreateAuction(string name, string description, decimal startingPrice,
+        DateTime endTime, string userName)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void UpdateDescription(int auctionId, string newDescription, string userName)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void PlaceBid(int auctionId, decimal amount, string userName)
+    {
+        throw new NotImplementedException();
+    }
+    
 }

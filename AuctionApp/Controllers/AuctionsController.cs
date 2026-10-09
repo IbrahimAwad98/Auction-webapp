@@ -7,6 +7,7 @@ namespace AuctionApp.Controllers;
 
 public class AuctionsController : Controller
 {
+    // låg koppling 
     private readonly IAuctionService _auctionService;
 
     public AuctionsController(IAuctionService auctionService)
@@ -19,6 +20,7 @@ public class AuctionsController : Controller
     {
         List<Auction> auctions = _auctionService.ListActiveAuctions();
 
+        // Vm mindre risk för over posting
         List<AuctionVm> auctionVms = new List<AuctionVm>();
         foreach (Auction auction in auctions)
         {
