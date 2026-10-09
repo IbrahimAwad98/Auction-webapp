@@ -5,8 +5,8 @@ namespace AuctionApp.Models.Auctions;
 public class AuctionVm
 {
     public int Id { get; set; }
-    public string Name { get; set; }
-    public string OwnerUserName { get; set; }
+    public string Name { get; set; } = ""; //kan vara null
+    public string OwnerUserName { get; set; } = ""; //kan vara null
     public decimal CurrentPrice { get; set; }
     public DateTime EndTime { get; set; }
     
