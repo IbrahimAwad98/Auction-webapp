@@ -26,7 +26,7 @@ Each layer only calls the layer directly below it, through an interface.
 
 ```
 Auction-webapp/
-├── docs/                       Architecture diagram
+├── docs/                       Architecture and database diagrams
 ├── AuctionApp/
 │   ├── Controllers/            AuctionsController, HomeController
 │   ├── Core/                   Auction, Bid, AuctionException, AuctionService
@@ -40,6 +40,8 @@ Auction-webapp/
 ```
 
 ## Database
+
+<img src="docs/schema.png" alt="Database schema" width="852">
 
 Two separate MySQL databases:
 
