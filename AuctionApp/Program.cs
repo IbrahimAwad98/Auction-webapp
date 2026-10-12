@@ -1,11 +1,15 @@
 using AuctionApp.Core;
 using AuctionApp.Core.Interfaces;
+using AuctionApp.Data;
+using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddDbContext<AuctionDbContext>(options =>
+    options.UseMySQL(builder.Configuration.GetConnectionString("AuctionDbConnection")));
 // Dependency injection: vilken implementation som används för interfacet
 builder.Services.AddScoped<IAuctionService, MockAuctionService>();
 /**
