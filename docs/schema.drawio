@@ -1,0 +1,68 @@
+<mxfile host="Electron">
+  <diagram name="Schema" id="schema1">
+    <mxGraphModel dx="989" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="450" math="0" shadow="0" background="#14161d">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="db1" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;verticalAlign=top;fontSize=18;fontStyle=1;spacingTop=8;dashed=1;strokeWidth=2;fillColor=none;strokeColor=#1e6fd9;fontColor=#ffffff;" value="auctiondb" vertex="1">
+          <mxGeometry height="330" width="470" x="40" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="db2" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;verticalAlign=top;fontSize=18;fontStyle=1;spacingTop=8;dashed=1;strokeWidth=2;fillColor=none;strokeColor=#1e6fd9;fontColor=#ffffff;" value="identitydb" vertex="1">
+          <mxGeometry height="330" width="470" x="670" y="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="t1" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=36;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;rounded=1;arcSize=8;fillColor=#f45b69;strokeColor=#028090;strokeWidth=2;fontColor=#ffffff;fontSize=14;swimlaneFillColor=#14161d;" value="AuctionDbs" vertex="1">
+          <mxGeometry height="216" width="190" x="70" y="95" as="geometry" />
+        </mxCell>
+        <mxCell id="t1-1" parent="t1" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="Id (PK)" vertex="1"><mxGeometry height="30" width="190" y="36" as="geometry" /></mxCell>
+        <mxCell id="t1-2" parent="t1" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="Name" vertex="1"><mxGeometry height="30" width="190" y="66" as="geometry" /></mxCell>
+        <mxCell id="t1-3" parent="t1" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="Description" vertex="1"><mxGeometry height="30" width="190" y="96" as="geometry" /></mxCell>
+        <mxCell id="t1-4" parent="t1" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="OwnerUserName" vertex="1"><mxGeometry height="30" width="190" y="126" as="geometry" /></mxCell>
+        <mxCell id="t1-5" parent="t1" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="StartingPrice" vertex="1"><mxGeometry height="30" width="190" y="156" as="geometry" /></mxCell>
+        <mxCell id="t1-6" parent="t1" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="EndTime" vertex="1"><mxGeometry height="30" width="190" y="186" as="geometry" /></mxCell>
+
+        <mxCell id="t2" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=36;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;rounded=1;arcSize=8;fillColor=#f45b69;strokeColor=#028090;strokeWidth=2;fontColor=#ffffff;fontSize=14;swimlaneFillColor=#14161d;" value="BidDbs" vertex="1">
+          <mxGeometry height="186" width="190" x="290" y="95" as="geometry" />
+        </mxCell>
+        <mxCell id="t2-1" parent="t2" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="Id (PK)" vertex="1"><mxGeometry height="30" width="190" y="36" as="geometry" /></mxCell>
+        <mxCell id="t2-2" parent="t2" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="UserName" vertex="1"><mxGeometry height="30" width="190" y="66" as="geometry" /></mxCell>
+        <mxCell id="t2-3" parent="t2" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="Amount" vertex="1"><mxGeometry height="30" width="190" y="96" as="geometry" /></mxCell>
+        <mxCell id="t2-4" parent="t2" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="PlacedAt" vertex="1"><mxGeometry height="30" width="190" y="126" as="geometry" /></mxCell>
+        <mxCell id="t2-5" parent="t2" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="AuctionDbId (FK)" vertex="1"><mxGeometry height="30" width="190" y="156" as="geometry" /></mxCell>
+
+        <mxCell id="t3" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=36;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;rounded=1;arcSize=8;fillColor=#f45b69;strokeColor=#028090;strokeWidth=2;fontColor=#ffffff;fontSize=14;swimlaneFillColor=#14161d;" value="AspNetUsers" vertex="1">
+          <mxGeometry height="156" width="190" x="700" y="95" as="geometry" />
+        </mxCell>
+        <mxCell id="t3-1" parent="t3" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="Id (PK)" vertex="1"><mxGeometry height="30" width="190" y="36" as="geometry" /></mxCell>
+        <mxCell id="t3-2" parent="t3" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="UserName" vertex="1"><mxGeometry height="30" width="190" y="66" as="geometry" /></mxCell>
+        <mxCell id="t3-3" parent="t3" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="Email" vertex="1"><mxGeometry height="30" width="190" y="96" as="geometry" /></mxCell>
+        <mxCell id="t3-4" parent="t3" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="PasswordHash" vertex="1"><mxGeometry height="30" width="190" y="126" as="geometry" /></mxCell>
+
+        <mxCell id="t4" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=36;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;rounded=1;arcSize=8;fillColor=#f45b69;strokeColor=#028090;strokeWidth=2;fontColor=#ffffff;fontSize=14;swimlaneFillColor=#14161d;" value="AspNetUserRoles" vertex="1">
+          <mxGeometry height="96" width="190" x="920" y="95" as="geometry" />
+        </mxCell>
+        <mxCell id="t4-1" parent="t4" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="UserId (PK, FK)" vertex="1"><mxGeometry height="30" width="190" y="36" as="geometry" /></mxCell>
+        <mxCell id="t4-2" parent="t4" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="RoleId (PK, FK)" vertex="1"><mxGeometry height="30" width="190" y="66" as="geometry" /></mxCell>
+
+        <mxCell id="t5" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=36;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;rounded=1;arcSize=8;fillColor=#f45b69;strokeColor=#028090;strokeWidth=2;fontColor=#ffffff;fontSize=14;swimlaneFillColor=#14161d;" value="AspNetRoles" vertex="1">
+          <mxGeometry height="96" width="190" x="920" y="255" as="geometry" />
+        </mxCell>
+        <mxCell id="t5-1" parent="t5" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="Id (PK)" vertex="1"><mxGeometry height="30" width="190" y="36" as="geometry" /></mxCell>
+        <mxCell id="t5-2" parent="t5" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="Name" vertex="1"><mxGeometry height="30" width="190" y="66" as="geometry" /></mxCell>
+
+        <mxCell id="e1" edge="1" parent="1" source="t1-1" target="t2-1" style="endArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#028090;fontColor=#ffffff;fontStyle=1;fontSize=13;labelBackgroundColor=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" value="1:N">
+          <mxGeometry relative="1" as="geometry"><mxPoint as="offset" y="-12" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="t3-1" target="t4-1" style="endArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#028090;fontColor=#ffffff;fontStyle=1;fontSize=13;labelBackgroundColor=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" value="1:N">
+          <mxGeometry relative="1" as="geometry"><mxPoint as="offset" y="-12" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="t4" target="t5" style="endArrow=none;html=1;rounded=0;strokeWidth=2;strokeColor=#028090;fontColor=#ffffff;fontStyle=1;fontSize=13;labelBackgroundColor=none;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" value="N:1">
+          <mxGeometry relative="1" as="geometry"><mxPoint as="offset" x="22" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="t2-2" target="t3-2" style="endArrow=none;dashed=1;html=1;rounded=0;strokeWidth=2;strokeColor=#f45b69;fontColor=#ffffff;fontSize=12;labelBackgroundColor=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" value="same UserName (no FK)">
+          <mxGeometry relative="1" as="geometry"><mxPoint as="offset" y="-14" /></mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
