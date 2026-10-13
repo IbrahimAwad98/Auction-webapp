@@ -4,7 +4,7 @@
 CREATE DATABASE IF NOT EXISTS auctiondb;
 CREATE DATABASE IF NOT EXISTS identitydb;
 CREATE USER IF NOT EXISTS 'auctionapp'@'localhost';
-ALTER USER 'auctionapp'@'localhost' IDENTIFIED BY 'ibrahim123';
+ALTER USER 'auctionapp'@'localhost' IDENTIFIED BY '<lösenord>';
 GRANT ALL PRIVILEGES ON auctiondb.* TO 'auctionapp'@'localhost';
 GRANT ALL PRIVILEGES ON identitydb.* TO 'auctionapp'@'localhost';
 FLUSH PRIVILEGES;
