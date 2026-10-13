@@ -1,11 +1,11 @@
 /* AuctionApp. Bootstrap 5.3 is the base; the tokens below retune it. */
 
 :root {
-  --bg: #f4f5f3;
+  --bg: #e6e7e3;
   --surface: #ffffff;
   --ink: #1e2229;
   --muted: #667085;
-  --line: #e2e4e0;
+  --line: #d6d8d3;
   --head: #22262e;
   --head-text: #c9cdd4;
   --accent: #8a2e3b;
