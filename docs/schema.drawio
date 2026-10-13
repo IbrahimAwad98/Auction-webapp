@@ -11,7 +11,7 @@
           <mxGeometry height="330" width="470" x="670" y="40" as="geometry" />
         </mxCell>
 
-        <mxCell id="t1" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=36;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;rounded=1;arcSize=8;fillColor=#f45b69;strokeColor=#028090;strokeWidth=2;fontColor=#ffffff;fontSize=14;swimlaneFillColor=#14161d;" value="AuctionDbs" vertex="1">
+        <mxCell id="t1" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=36;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;rounded=1;arcSize=8;fillColor=#f45b69;strokeColor=#028090;strokeWidth=2;fontColor=#ffffff;fontSize=14;swimlaneFillColor=#14161d;" value="Auctions" vertex="1">
           <mxGeometry height="216" width="190" x="70" y="95" as="geometry" />
         </mxCell>
         <mxCell id="t1-1" parent="t1" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="Id (PK)" vertex="1"><mxGeometry height="30" width="190" y="36" as="geometry" /></mxCell>
@@ -21,14 +21,14 @@
         <mxCell id="t1-5" parent="t1" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="StartingPrice" vertex="1"><mxGeometry height="30" width="190" y="156" as="geometry" /></mxCell>
         <mxCell id="t1-6" parent="t1" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="EndTime" vertex="1"><mxGeometry height="30" width="190" y="186" as="geometry" /></mxCell>
 
-        <mxCell id="t2" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=36;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;rounded=1;arcSize=8;fillColor=#f45b69;strokeColor=#028090;strokeWidth=2;fontColor=#ffffff;fontSize=14;swimlaneFillColor=#14161d;" value="BidDbs" vertex="1">
+        <mxCell id="t2" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=36;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;rounded=1;arcSize=8;fillColor=#f45b69;strokeColor=#028090;strokeWidth=2;fontColor=#ffffff;fontSize=14;swimlaneFillColor=#14161d;" value="Bids" vertex="1">
           <mxGeometry height="186" width="190" x="290" y="95" as="geometry" />
         </mxCell>
         <mxCell id="t2-1" parent="t2" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="Id (PK)" vertex="1"><mxGeometry height="30" width="190" y="36" as="geometry" /></mxCell>
         <mxCell id="t2-2" parent="t2" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="UserName" vertex="1"><mxGeometry height="30" width="190" y="66" as="geometry" /></mxCell>
         <mxCell id="t2-3" parent="t2" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="Amount" vertex="1"><mxGeometry height="30" width="190" y="96" as="geometry" /></mxCell>
         <mxCell id="t2-4" parent="t2" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="PlacedAt" vertex="1"><mxGeometry height="30" width="190" y="126" as="geometry" /></mxCell>
-        <mxCell id="t2-5" parent="t2" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="AuctionDbId (FK)" vertex="1"><mxGeometry height="30" width="190" y="156" as="geometry" /></mxCell>
+        <mxCell id="t2-5" parent="t2" style="text;strokeColor=#028090;strokeWidth=2;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;html=1;fontColor=#ffffff;fontSize=13;" value="AuctionId (FK)" vertex="1"><mxGeometry height="30" width="190" y="156" as="geometry" /></mxCell>
 
         <mxCell id="t3" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=36;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;rounded=1;arcSize=8;fillColor=#f45b69;strokeColor=#028090;strokeWidth=2;fontColor=#ffffff;fontSize=14;swimlaneFillColor=#14161d;" value="AspNetUsers" vertex="1">
           <mxGeometry height="156" width="190" x="700" y="95" as="geometry" />
