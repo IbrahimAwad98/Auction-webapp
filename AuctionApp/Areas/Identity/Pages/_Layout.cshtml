@@ -1,0 +1,8 @@
+@* Shadows the Identity UI package layout so Login, Register and Manage render inside the app layout. *@
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+@RenderBody()
+@section Scripts {
+    @await RenderSectionAsync("Scripts", required: false)
+}
