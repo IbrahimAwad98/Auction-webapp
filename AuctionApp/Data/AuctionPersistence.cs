@@ -16,20 +16,43 @@ public class AuctionPersistence : IAuctionPersistence
             .Where(a => a.EndTime > now)
             .OrderBy(a => a.EndTime)
             .ToList();
+
+        var auctionIds = auctionsDb.Select(a => a.Id).ToList();
+
+        // Hämta endast högsta budet för varje auktion
+        var highestBidsDb = _db.Bids
+            .Where(b => auctionIds.Contains(b.AuctionId) &&
+                        !_db.Bids.Any(other =>
+                            other.AuctionId == b.AuctionId &&
+                            other.Amount > b.Amount))
+            .ToList();
+
         var auctions = new List<Auction>();
+
         foreach (var a in auctionsDb)
         {
-            Auction auction = new Auction(
+            var bids = highestBidsDb
+                .Where(b => b.AuctionId == a.Id)
+                .Take(1)
+                .Select(b => new Bid(
+                    b.Id,
+                    b.UserName,
+                    b.Amount,
+                    b.PlacedAt
+                ))
+                .ToList();
+
+            auctions.Add(new Auction(
                 a.Id,
                 a.Name,
                 a.Description,
                 a.OwnerUserName,
                 a.StartingPrice,
                 a.EndTime,
-                new List<Bid>()
-            );
-            auctions.Add(auction);
+                bids
+            ));
         }
+
         return auctions;
     }
 
