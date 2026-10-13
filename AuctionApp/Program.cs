@@ -11,11 +11,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AuctionDbContext>(options =>
     options.UseMySQL(builder.Configuration.GetConnectionString("AuctionDbConnection")));
 // Dependency injection: vilken implementation som används för interfacet
-builder.Services.AddScoped<IAuctionService, MockAuctionService>();
-/**
-* builder.Services.AddScoped<IAuctionService, AuctionService>();
-* builder.Services.AddScoped<IAuctionPersistence, AuctionPersistence>();
- */
+builder.Services.AddScoped<IAuctionService, AuctionService>();
+builder.Services.AddScoped<IAuctionPersistence, AuctionPersistence>();
 
 var app = builder.Build();
 
