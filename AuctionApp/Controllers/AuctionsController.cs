@@ -2,9 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using AuctionApp.Core;
 using AuctionApp.Core.Interfaces;
 using AuctionApp.Models.Auctions;
-
+using Microsoft.AspNetCore.Authorization;
 namespace AuctionApp.Controllers;
 
+[Authorize]
 public class AuctionsController : Controller
 {
     // Interface istället för konkret klass så mocken kan bytas mot riktig service i DI utan att röra controllern.
@@ -17,7 +18,8 @@ public class AuctionsController : Controller
 
     private string CurrentUserName()
     {
-        return "iawad@kth.se";
+        return User.Identity?.Name
+               ?? throw new InvalidOperationException("User is not authenticated.");
     }
 
     // GET: /Auctions
