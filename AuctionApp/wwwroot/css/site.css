@@ -8,9 +8,9 @@
   --line: #d6d8d3;
   --head: #22262e;
   --head-text: #c9cdd4;
-  --accent: #8a2e3b;
-  --accent-strong: #6f2430;
-  --accent-soft: #f6ecee;
+  --accent: #1f7a4d;
+  --accent-strong: #165c39;
+  --accent-soft: #e6f2ec;
   --danger: #b42318;
   --danger-soft: #fdecea;
 
@@ -20,9 +20,9 @@
   --bs-border-color: var(--line);
   --bs-link-color: var(--accent);
   --bs-link-hover-color: var(--accent-strong);
-  --bs-link-color-rgb: 138, 46, 59;
-  --bs-link-hover-color-rgb: 111, 36, 48;
-  --bs-focus-ring-color: rgba(138, 46, 59, 0.3);
+  --bs-link-color-rgb: 31, 122, 77;
+  --bs-link-hover-color-rgb: 22, 92, 57;
+  --bs-focus-ring-color: rgba(31, 122, 77, 0.3);
   --bs-secondary-color: var(--muted);
 }
 
@@ -128,7 +128,7 @@ main.page { flex: 1; padding-top: 2rem; padding-bottom: 3rem; }
 .panel > .table { margin: 0; }
 .table {
   --bs-table-bg: transparent;
-  --bs-table-hover-bg: #faf7f7;
+  --bs-table-hover-bg: #f5f9f6;
   --bs-table-border-color: var(--line);
 }
 .table th {
