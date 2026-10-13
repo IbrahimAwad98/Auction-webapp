@@ -26,15 +26,19 @@ Each layer only calls the layer directly below it, through an interface.
 
 ```
 Auction-webapp/
-├── docs/                       Architecture and database diagrams
+├── docs/                       Architecture and database diagrams, database setup script
 ├── AuctionApp/
+│   ├── Areas/Identity/Pages/   Layout shim so the Identity UI pages use the app layout
 │   ├── Controllers/            AuctionsController, HomeController
 │   ├── Core/                   Auction, Bid, AuctionException, AuctionService
 │   │   └── Interfaces/         IAuctionService, IAuctionPersistence
-│   ├── Models/Auctions/        View models: AuctionVm, AuctionDetailsVm etc..
-│   ├── Persistence/            AuctionDb, BidDb, AuctionDbContext, AuctionPersistence
-│   ├── Views/Auctions/         Index, Details, Create, Edit, MyBids, Won
-│   ├── appsettings.json        Connection strings for the two databases
+│   ├── Data/                   AuctionDb, BidDb, AuctionDbContext, AuctionPersistence, AppIdentityDbContext
+│   │   └── Migrations/Identity EF Core migrations for the Identity database
+│   ├── Migrations/             EF Core migrations for the auction database
+│   ├── Models/Auctions/        View models: AuctionVm, AuctionDetailsVm, CreateAuctionVm, ...
+│   ├── Views/                  Auctions (Index, Details, Create, Edit, MyBids, Won), Home, Shared
+│   ├── wwwroot/css/site.css    Styling on top of Bootstrap
+│   ├── appsettings.json        Connection strings for the two databases (password in user secrets)
 │   └── Program.cs              Dependency injection and request pipeline
 └── AuctionApp.sln
 ```
@@ -45,8 +49,22 @@ Auction-webapp/
 
 Two separate MySQL databases:
 
-- **Auction database**: auctions and bids, where each bid has a foreign key to its auction
-- **Identity database**: users and roles, managed by ASP.NET Core Identity
+- **Auction database** (`auctiondb`): auctions and bids, where each bid has a foreign key to its auction
+- **Identity database** (`identitydb`): users and roles, managed by ASP.NET Core Identity
+
+### Setup
+
+1. Run `docs/Databas.sql` as root in MySQL Workbench. It creates both databases and the `auctionapp` user. Replace `<lösenord>` with a password of your choice.
+2. Store the connection strings with that password in user secrets, from the `AuctionApp/AuctionApp` folder:
+   ```
+   dotnet user-secrets set "ConnectionStrings:AuctionDbConnection" "server=localhost;port=3306;database=auctiondb;user=auctionapp;password=<lösenord>;"
+   dotnet user-secrets set "ConnectionStrings:IdentityDbConnection" "server=localhost;port=3306;database=identitydb;user=auctionapp;password=<lösenord>;"
+   ```
+3. Create the tables:
+   ```
+   dotnet ef database update --context AuctionDbContext
+   dotnet ef database update --context AppIdentityDbContext
+   ```
 
 ## Contributors
 
