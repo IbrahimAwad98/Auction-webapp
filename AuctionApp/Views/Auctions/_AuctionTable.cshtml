@@ -1,0 +1,41 @@
+@model List<AuctionApp.Models.Auctions.AuctionVm>
+@{
+    bool ended = ViewData["Ended"] as bool? ?? false;
+}
+
+<div class="panel">
+    @if (Model.Count == 0)
+    {
+        <div class="empty">
+            <p>@ViewData["EmptyText"]</p>
+            @if (!ended)
+            {
+                <a asp-controller="Auctions" asp-action="Index">Browse active auctions</a>
+            }
+        </div>
+    }
+    else
+    {
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Seller</th>
+                <th scope="col" class="num">@(ended ? "Final price" : "Current price")</th>
+                <th scope="col" class="num">@(ended ? "Ended" : "Ends")</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var auction in Model)
+            {
+                <tr>
+                    <td><a class="row-link" asp-controller="Auctions" asp-action="Details" asp-route-id="@auction.Id">@auction.Name</a></td>
+                    <td class="muted">@auction.OwnerUserName</td>
+                    <td class="num">@auction.CurrentPrice.ToString("N0") kr</td>
+                    <td class="num muted">@auction.EndTime.ToString("d MMM yyyy, HH:mm")</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+</div>

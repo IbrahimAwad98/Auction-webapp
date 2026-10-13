@@ -1,8 +1,27 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to Auction web App</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="hero">
+    <h1>Buy and sell with open bidding.</h1>
+    <p>List an item with a starting price and an end time. The highest bid when the clock runs out wins.</p>
+    <div class="form-actions">
+        <a class="btn btn-primary" asp-controller="Auctions" asp-action="Index">Browse auctions</a>
+        <a class="btn btn-outline-secondary" asp-controller="Auctions" asp-action="Create">Create auction</a>
+    </div>
+</section>
+
+<ul class="steps">
+    <li>
+        <strong>Sell</strong>
+        <p>Create an auction with a name, description, starting price and end time. The description can be edited while the auction is live.</p>
+    </li>
+    <li>
+        <strong>Bid</strong>
+        <p>Each bid must be higher than the current price. Bids are listed highest first on the auction page.</p>
+    </li>
+    <li>
+        <strong>Follow</strong>
+        <p>My bids shows the active auctions you are part of. Won shows the ended auctions you came out on top of.</p>
+    </li>
+</ul>

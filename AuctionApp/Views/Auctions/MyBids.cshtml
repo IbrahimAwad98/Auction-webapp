@@ -1,33 +1,15 @@
-﻿@model List<AuctionApp.Models.Auctions.AuctionVm>
+@model List<AuctionApp.Models.Auctions.AuctionVm>
 
 @{
     ViewData["Title"] = "My bids";
+    ViewData["EmptyText"] = "You have not placed any bids on active auctions.";
 }
 
-<h1>My bids</h1>
+<div class="page-header">
+    <div>
+        <h1>My bids</h1>
+        <p class="lead-in">Active auctions where you have placed at least one bid.</p>
+    </div>
+</div>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Seller</th>
-        <th>Current price</th>
-        <th>Ends</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var auction in Model)
-    {
-        <tr>
-            <td>@auction.Name</td>
-            <td>@auction.OwnerUserName</td>
-            <td>@auction.CurrentPrice</td>
-            <td>@auction.EndTime</td>
-            <td>
-                <a href="/Auctions/Details/@auction.Id">Details</a>
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+<partial name="_AuctionTable" model="Model" />
