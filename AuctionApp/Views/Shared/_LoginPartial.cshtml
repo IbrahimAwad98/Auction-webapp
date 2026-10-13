@@ -1,42 +1,22 @@
 @using Microsoft.AspNetCore.Identity
-    @inject SignInManager<IdentityUser> SignInManager
-
-    <ul class="navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
+@inject SignInManager<IdentityUser> SignInManager
+@{
+    string ActivePage(string page) =>
+        string.Equals(ViewContext.RouteData.Values["page"]?.ToString(), page) ? "active" : "";
+}
+<ul class="topnav">
+@if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <span class="nav-link text-dark">
-        Hello @User.Identity?.Name!
-        </span>
-        </li>
-
-        <li class="nav-item">
-        <form asp-area="Identity"
-    asp-page="/Account/Logout"
-    method="post">
-
-        <button type="submit" class="nav-link btn btn-link text-dark">
-        Logout
-        </button>
+    <li><a class="@ActivePage("/Account/Manage/Index")" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage account">@User.Identity?.Name</a></li>
+    <li>
+        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/" method="post">
+            <button type="submit">Log out</button>
         </form>
-        </li>
+    </li>
 }
 else
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark"
-    asp-area="Identity"
-    asp-page="/Account/Register">
-             Register
-             </a>
-        </li>
-
-        <li class="nav-item">
-        <a class="nav-link text-dark"
-    asp-area="Identity"
-    asp-page="/Account/Login">
-             Login
-             </a>
-        </li>
+    <li><a class="@ActivePage("/Account/Register")" asp-area="Identity" asp-page="/Account/Register">Register</a></li>
+    <li><a class="@ActivePage("/Account/Login")" asp-area="Identity" asp-page="/Account/Login">Log in</a></li>
 }
 </ul>
