@@ -2,32 +2,15 @@
 
 @{
     ViewData["Title"] = "Won auctions";
+    ViewData["Ended"] = true;
+    ViewData["EmptyText"] = "You have not won any auctions yet.";
 }
 
-<h1>Won auctions</h1>
+<div class="page-header">
+    <div>
+        <h1>Won auctions</h1>
+        <p class="lead-in">Ended auctions where your bid was the highest.</p>
+    </div>
+</div>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Seller</th>
-        <th>Final price</th>
-        <th>Ended</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var auction in Model)
-    {
-        <tr>
-            <td>@auction.Name</td>
-            <td>@auction.OwnerUserName</td>
-            <td>@auction.CurrentPrice</td>
-            <td>@auction.EndTime</td>
-            <td>
-                <a href="/Auctions/Details/@auction.Id">Details</a>
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+<partial name="_AuctionTable" model="Model" />

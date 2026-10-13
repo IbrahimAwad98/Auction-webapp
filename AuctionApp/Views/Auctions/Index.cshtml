@@ -2,36 +2,15 @@
 
 @{
     ViewData["Title"] = "Active auctions";
+    ViewData["EmptyText"] = "There are no active auctions right now.";
 }
 
-<h1>Active auctions</h1>
+<div class="page-header">
+    <div>
+        <h1>Active auctions</h1>
+        <p class="lead-in">Sorted by end time, closing soonest first.</p>
+    </div>
+    <a class="btn btn-primary" asp-controller="Auctions" asp-action="Create">Create auction</a>
+</div>
 
-<p>
-    <a href="/Auctions/Create">Create new auction</a>
-</p>
-
-<table class="table">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Seller</th>
-        <th>Current price</th>
-        <th>Ends</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var auction in Model)
-    {
-        <tr>
-            <td>@auction.Name</td>
-            <td>@auction.OwnerUserName</td>
-            <td>@auction.CurrentPrice</td>
-            <td>@auction.EndTime</td>
-            <td>
-                <a href="/Auctions/Details/@auction.Id">Details</a>
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+<partial name="_AuctionTable" model="Model" />
