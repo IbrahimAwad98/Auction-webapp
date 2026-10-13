@@ -1,16 +1,16 @@
 /* AuctionApp. Bootstrap 5.3 is the base; the tokens below retune it. */
 
 :root {
-  --bg: #efe9df;
-  --surface: rgba(255, 255, 255, 0.94);
+  --bg: #f4f5f3;
+  --surface: #ffffff;
   --ink: #1e2229;
-  --muted: #6f675c;
-  --line: #e3dbcc;
-  --head: #2a2019;
-  --head-text: #d6ccbd;
-  --accent: #6b4a24;
-  --accent-strong: #4f361a;
-  --accent-soft: #f3ecdf;
+  --muted: #667085;
+  --line: #e2e4e0;
+  --head: #22262e;
+  --head-text: #c9cdd4;
+  --accent: #8a2e3b;
+  --accent-strong: #6f2430;
+  --accent-soft: #f6ecee;
   --danger: #b42318;
   --danger-soft: #fdecea;
 
@@ -20,16 +20,15 @@
   --bs-border-color: var(--line);
   --bs-link-color: var(--accent);
   --bs-link-hover-color: var(--accent-strong);
-  --bs-link-color-rgb: 107, 74, 36;
-  --bs-link-hover-color-rgb: 79, 54, 26;
-  --bs-focus-ring-color: rgba(107, 74, 36, 0.3);
+  --bs-link-color-rgb: 138, 46, 59;
+  --bs-link-hover-color-rgb: 111, 36, 48;
+  --bs-focus-ring-color: rgba(138, 46, 59, 0.3);
   --bs-secondary-color: var(--muted);
 }
 
 html { font-size: 16px; }
 
 body {
-  background: var(--bg) url("../img/background.jpg") center / cover no-repeat fixed;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -96,7 +95,6 @@ h2 { font-size: 1.125rem; margin: 0 0 0.75rem; }
 main.page { flex: 1; padding-top: 2rem; padding-bottom: 3rem; }
 
 .site-footer {
-  background: var(--surface);
   border-top: 1px solid var(--line);
   padding: 1.25rem 0;
   font-size: 0.875rem;
@@ -122,7 +120,6 @@ main.page { flex: 1; padding-top: 2rem; padding-bottom: 3rem; }
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 6px;
-  backdrop-filter: blur(8px);
 }
 .panel-body { padding: 1.5rem; }
 .panel + .panel { margin-top: 1.5rem; }
@@ -131,7 +128,7 @@ main.page { flex: 1; padding-top: 2rem; padding-bottom: 3rem; }
 .panel > .table { margin: 0; }
 .table {
   --bs-table-bg: transparent;
-  --bs-table-hover-bg: #faf6ef;
+  --bs-table-hover-bg: #faf7f7;
   --bs-table-border-color: var(--line);
 }
 .table th {
@@ -166,20 +163,19 @@ main.page { flex: 1; padding-top: 2rem; padding-bottom: 3rem; }
 }
 .btn-outline-secondary {
   --bs-btn-color: var(--ink);
-  --bs-btn-bg: #fff;
-  --bs-btn-border-color: #cfc6b6;
-  --bs-btn-hover-bg: #f3eee5;
+  --bs-btn-border-color: #c8ccc9;
+  --bs-btn-hover-bg: #f0f1ef;
   --bs-btn-hover-color: var(--ink);
-  --bs-btn-hover-border-color: #cfc6b6;
-  --bs-btn-active-bg: #e9e2d5;
+  --bs-btn-hover-border-color: #c8ccc9;
+  --bs-btn-active-bg: #e6e8e5;
   --bs-btn-active-color: var(--ink);
-  --bs-btn-active-border-color: #cfc6b6;
+  --bs-btn-active-border-color: #c8ccc9;
 }
 
 /* Forms */
 .form-control {
-  background: #fff;
-  border-color: #cfc6b6;
+  background: var(--surface);
+  border-color: #c8ccc9;
   border-radius: 6px;
 }
 .form-control:focus {
@@ -194,7 +190,7 @@ main.page { flex: 1; padding-top: 2rem; padding-bottom: 3rem; }
   gap: 0.75rem;
   margin-top: 1.5rem;
 }
-.input-group-text { background: #f7f3ec; border-color: #cfc6b6; color: var(--muted); }
+.input-group-text { background: #f7f8f6; border-color: #c8ccc9; color: var(--muted); }
 .text-danger { color: var(--danger) !important; font-size: 0.875rem; }
 
 .alert-danger {
@@ -247,13 +243,11 @@ main.page { flex: 1; padding-top: 2rem; padding-bottom: 3rem; }
   background: var(--accent-soft);
   color: var(--accent-strong);
 }
-.status.ended { background: #ece7de; color: var(--muted); }
+.status.ended { background: #eceeeb; color: var(--muted); }
 
 /* Home */
-.home { padding: 1rem 2.5rem 2.5rem; }
-@media (max-width: 600px) { .home { padding: 0.5rem 1.25rem 1.5rem; } }
 .hero {
-  padding: 2.5rem 0;
+  padding: 3rem 0 2.5rem;
   max-width: 640px;
 }
 .hero h1 { font-size: 2.5rem; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
@@ -273,7 +267,7 @@ main.page { flex: 1; padding-top: 2rem; padding-bottom: 3rem; }
 .steps p { margin: 0; color: var(--muted); }
 
 /* Text pages (About, Error) */
-.prose { max-width: 640px; padding: 1.5rem; }
+.prose { max-width: 640px; }
 .prose p { margin-bottom: 1rem; }
 
 @media (prefers-reduced-motion: reduce) {
