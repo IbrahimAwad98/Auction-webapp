@@ -1,7 +1,6 @@
 ﻿namespace AuctionApp.Core.Interfaces;
-/**
- * gränsen mellan presentation och core
- */
+
+// Boundary between presentation and Core. The controller depends on this, not on the implementation.
 public interface IAuctionService
 {
     List<Auction> ListActiveAuctions();
@@ -13,5 +12,4 @@ public interface IAuctionService
         DateTime endTime, string userName);
     void UpdateDescription(int auctionId, string newDescription, string userName);
     void PlaceBid(int auctionId, decimal amount, string userName);
-    
 }

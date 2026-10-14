@@ -1,29 +1,31 @@
 using AuctionApp.Core;
 using AuctionApp.Core.Interfaces;
 using AuctionApp.Data;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+// Two databases: one for the auctions, one for Identity. Passwords come from user-secrets.
 builder.Services.AddDbContext<AuctionDbContext>(options =>
-    options.UseMySQL(builder.Configuration.GetConnectionString("AuctionDbConnection")));
-// Dependency injection: vilken implementation som används för interfacet
+    options.UseMySQL(builder.Configuration.GetConnectionString("AuctionDbConnection")
+                     ?? throw new InvalidOperationException("AuctionDbConnection is missing.")));
+builder.Services.AddDbContext<AppIdentityDbContext>(options =>
+    options.UseMySQL(builder.Configuration.GetConnectionString("IdentityDbConnection")
+                     ?? throw new InvalidOperationException("IdentityDbConnection is missing.")));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<AppIdentityDbContext>();
+
+// Dependency injection: which implementation is used for each interface.
 builder.Services.AddScoped<IAuctionService, AuctionService>();
 builder.Services.AddScoped<IAuctionPersistence, AuctionPersistence>();
-builder.Services.AddDbContext<AppIdentityDbContext>(options =>
-    options.UseMySQL(builder.Configuration.GetConnectionString("IdentityDbConnection")));
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
-    {
-        options.SignIn.RequireConfirmedAccount = false;
-    })
-    .AddEntityFrameworkStores<AppIdentityDbContext>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -32,9 +34,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthentication();
 app.UseAuthorization();
 

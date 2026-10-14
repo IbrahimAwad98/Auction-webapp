@@ -1,7 +1,6 @@
 ﻿namespace AuctionApp.Core.Interfaces;
-/**
- * gränsen mellan core och datalager
- */
+
+// Boundary between Core and the data layer. Core only sees domain objects, never EF entities.
 public interface IAuctionPersistence
 {
     List<Auction> GetActive(DateTime now);

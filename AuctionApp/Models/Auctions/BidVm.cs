@@ -2,19 +2,20 @@
 
 namespace AuctionApp.Models.Auctions;
 
-// Skiljer vyns bud från domänens Bid så vyn kan ändras utan att röra affärslogiken.
+// Keeps the view's bid separate from the domain Bid so the view can change without touching the rules.
 public class BidVm
 {
-    public string UserName { get; set; } = "";  //kan vara null
+    public string UserName { get; set; } = "";
     public decimal Amount { get; set; }
     public DateTime PlacedAt { get; set; }
 
-    public static BidVm fromBid(Bid bid)
+    public static BidVm FromBid(Bid bid)
     {
-        BidVm vm = new BidVm();
-        vm.UserName = bid.UserName;
-        vm.Amount = bid.Amount;
-        vm.PlacedAt = bid.PlacedAt;
-        return vm;
+        return new BidVm
+        {
+            UserName = bid.UserName,
+            Amount = bid.Amount,
+            PlacedAt = bid.PlacedAt
+        };
     }
 }
