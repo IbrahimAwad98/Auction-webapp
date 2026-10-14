@@ -183,6 +183,13 @@ main.page { flex: 1; padding-top: 2rem; padding-bottom: 3rem; }
   box-shadow: 0 0 0 0.2rem var(--bs-focus-ring-color);
 }
 .form-label { font-weight: 500; margin-bottom: 0.375rem; }
+
+/* Required marker: ASP.NET emits data-val-required on inputs bound to [Required] or non-nullable value types. */
+.form-label:has(+ [data-val-required])::after,
+.form-label:has(+ .input-group [data-val-required])::after {
+  content: " *";
+  color: var(--danger);
+}
 .form-hint { font-size: 0.875rem; color: var(--muted); margin-top: 0.25rem; }
 .form-narrow { max-width: 560px; }
 .form-actions {
