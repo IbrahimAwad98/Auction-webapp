@@ -33,18 +33,13 @@ public class AuctionService : IAuctionService
 
     public Auction GetAuctionDetails(int auctionId)
     {
-        DateTime now = DateTime.Now;
+        
         Auction? auction = persistence.GetByIdWithBids(auctionId);
         if (auction == null)
         {
             throw new AuctionException("The auction does not exist.");
         }
-
-        if (!auction.IsActive(now))
-        {
-            throw new AuctionException("The auction has ended.");
-        }
-
+        
         return auction;
     }
 
