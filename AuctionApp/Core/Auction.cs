@@ -1,6 +1,7 @@
 ﻿namespace AuctionApp.Core;
-// Affärsreglerna bor här, inte i controllern, så de kan testas utan webb och databas.
-// "now" skickas in utifrån för att tidsreglerna ska gå att testa deterministiskt.
+
+// The business rules live here, not in the controller, so they can be tested without web or database.
+// "now" is passed in so the time-based rules can be tested deterministically.
 public class Auction
 {
     public int Id { get; }
@@ -9,9 +10,9 @@ public class Auction
     public string OwnerUserName { get; }
     public decimal StartingPrice { get; }
     public DateTime EndTime { get; }
-    private List<Bid> bids = new List<Bid>();
+    private readonly List<Bid> bids;
 
-    public Auction(string name, string description, string ownerUserName, 
+    public Auction(string name, string description, string ownerUserName,
         decimal startingPrice, DateTime endTime, DateTime now)
     {
         if (string.IsNullOrWhiteSpace(name))
@@ -20,7 +21,7 @@ public class Auction
         }
         if (string.IsNullOrWhiteSpace(ownerUserName))
         {
-            throw new AuctionException("An auction must have a owner.");
+            throw new AuctionException("An auction must have an owner.");
         }
         if (startingPrice < 0)
         {
@@ -35,11 +36,12 @@ public class Auction
         OwnerUserName = ownerUserName;
         StartingPrice = startingPrice;
         EndTime = endTime;
+        bids = new List<Bid>();
     }
 
-    // Ingen validering här: datan kom från databasen och validerades redan när den sparades.
+    // No validation here: the data comes from the database and was validated when it was saved.
     public Auction(int id, string name, string description,
-        string ownerUserName, decimal startingPrice, DateTime endTime, List<Bid> existingsBids)
+        string ownerUserName, decimal startingPrice, DateTime endTime, List<Bid> existingBids)
     {
         Id = id;
         Name = name;
@@ -47,13 +49,10 @@ public class Auction
         OwnerUserName = ownerUserName;
         StartingPrice = startingPrice;
         EndTime = endTime;
-        foreach (Bid bid in existingsBids)
-        {
-            bids.Add(bid);
-        }
+        bids = new List<Bid>(existingBids);
     }
 
-    // Kopia så ingen utanför kan lägga till bud och kringgå reglerna i PlaceBid.
+    // A copy, so nobody outside can add bids and bypass the rules in PlaceBid.
     public List<Bid> GetBids()
     {
         return new List<Bid>(bids);
@@ -64,63 +63,30 @@ public class Auction
         return now < EndTime;
     }
 
-    public bool IsOwnedBy(String userName)
+    public bool IsOwnedBy(string userName)
     {
         return OwnerUserName == userName;
     }
-    
-    //kan vara null
+
     public Bid? HighestBid()
     {
-        Bid? highest = null;
-
-        foreach (Bid bid in bids)
-        {
-            if (highest == null || bid.Amount > highest.Amount)
-            {
-                highest = bid;
-            }
-        }
-
-        return highest;
-    }
-
-    public Bid HighestBig()
-    {
-        Bid? highest = null;
-        foreach (Bid bid in bids)
-        {
-            if (highest == null || bid.Amount > highest.Amount)
-            {
-                highest = bid;
-            }
-        }
-
-        return highest;
+        return bids.MaxBy(bid => bid.Amount);
     }
 
     public decimal CurrentPrice()
     {
-        Bid? highest = HighestBid();
-        if (highest == null)
-        {
-            return StartingPrice;
-        }
-
-        return highest.Amount;
+        return HighestBid()?.Amount ?? StartingPrice;
     }
-    
-    
+
     public void UpdateDescription(string newDescription, string userName)
     {
         if (!IsOwnedBy(userName))
         {
             throw new AuctionException("Only the owner can edit the auction.");
         }
-
         Description = newDescription;
     }
-    
+
     public Bid PlaceBid(string userName, decimal amount, DateTime now)
     {
         if (!IsActive(now))
@@ -141,21 +107,13 @@ public class Auction
         return bid;
     }
 
+    // Null while the auction is still running or if nobody bid.
     public string? Winner(DateTime now)
     {
         if (IsActive(now))
         {
             return null;
         }
-
-        Bid? highest = HighestBid();
-
-        if (highest == null)
-        {
-            return null;
-        }
-
-        return highest.UserName;
+        return HighestBid()?.UserName;
     }
-    
 }

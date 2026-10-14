@@ -1,19 +1,21 @@
-using Microsoft.AspNetCore.Mvc;
 using AuctionApp.Core;
 using AuctionApp.Core.Interfaces;
 using AuctionApp.Models.Auctions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
 namespace AuctionApp.Controllers;
 
+// Every action requires login because every page is tied to the current user.
 [Authorize]
 public class AuctionsController : Controller
 {
-    // Interface istället för konkret klass så mocken kan bytas mot riktig service i DI utan att röra controllern.
-    private readonly IAuctionService _auctionService;
+    // Depends on the interface so the service can be swapped in DI without touching the controller.
+    private readonly IAuctionService auctionService;
 
     public AuctionsController(IAuctionService auctionService)
     {
-        _auctionService = auctionService;
+        this.auctionService = auctionService;
     }
 
     private string CurrentUserName()
@@ -22,52 +24,33 @@ public class AuctionsController : Controller
                ?? throw new InvalidOperationException("User is not authenticated.");
     }
 
-    // GET: /Auctions
-    public IActionResult Index()
+    // The views get view models, not domain objects, so they only see what they display.
+    private ViewResult ListView(List<Auction> auctions)
     {
-        List<Auction> auctions = _auctionService.ListActiveAuctions();
-
-        // Vm mindre risk för over posting
-        List<AuctionVm> auctionVms = new List<AuctionVm>();
-        foreach (Auction auction in auctions)
-        {
-            auctionVms.Add(AuctionVm.FromAuction(auction));
-        }
-        return View(auctionVms);
+        return View(auctions.Select(AuctionVm.FromAuction).ToList());
     }
 
-    // GET: /Auctions/MyBids
+    public IActionResult Index()
+    {
+        return ListView(auctionService.ListActiveAuctions());
+    }
+
     public IActionResult MyBids()
     {
-        List<Auction> auctions = _auctionService.ListActiveAuctionsWithBidBy(CurrentUserName());
-        List<AuctionVm> auctionVms = new List<AuctionVm>();
-        foreach (Auction auction in auctions)
-        {
-            auctionVms.Add(AuctionVm.FromAuction(auction));
-        }
-
-        return View(auctionVms);
+        return ListView(auctionService.ListActiveAuctionsWithBidBy(CurrentUserName()));
     }
 
     public IActionResult Won()
     {
-        List<Auction> auctions = _auctionService.ListAuctionsWonBy(CurrentUserName());
-        List<AuctionVm> auctionVms = new List<AuctionVm>();
-        foreach (Auction auction in auctions)
-        {
-            auctionVms.Add(AuctionVm.FromAuction(auction));
-        }
-
-        return View(auctionVms);
+        return ListView(auctionService.ListAuctionsWonBy(CurrentUserName()));
     }
 
-    public IActionResult Details(int Id)
+    public IActionResult Details(int id)
     {
         try
         {
-            Auction auction = _auctionService.GetAuctionDetails(Id);
-            AuctionDetailsVm auctionDetailsVm = AuctionDetailsVm.FromAuction(auction, CurrentUserName());
-            return View(auctionDetailsVm);
+            Auction auction = auctionService.GetAuctionDetails(id);
+            return View(AuctionDetailsVm.FromAuction(auction, CurrentUserName()));
         }
         catch (AuctionException)
         {
@@ -88,12 +71,10 @@ public class AuctionsController : Controller
         {
             return View(vm);
         }
-
         try
         {
-            _auctionService.CreateAuction(vm.Name, vm.Description, vm.StartingPrice,
-                vm.EndTime, CurrentUserName());
-            return Redirect("/Auctions");
+            auctionService.CreateAuction(vm.Name, vm.Description, vm.StartingPrice, vm.EndTime, CurrentUserName());
+            return RedirectToAction(nameof(Index));
         }
         catch (AuctionException e)
         {
@@ -101,12 +82,12 @@ public class AuctionsController : Controller
             return View(vm);
         }
     }
-    
-    public IActionResult Edit(int Id)
+
+    public IActionResult Edit(int id)
     {
         try
         {
-            Auction auction = _auctionService.GetAuctionForOwner(Id, CurrentUserName());
+            Auction auction = auctionService.GetAuctionForOwner(id, CurrentUserName());
             return View(EditAuctionVm.FromAuction(auction));
         }
         catch (AuctionException)
@@ -117,39 +98,36 @@ public class AuctionsController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit(int Id, EditAuctionVm vm)
+    public IActionResult Edit(int id, EditAuctionVm vm)
     {
         if (!ModelState.IsValid)
         {
             return View(vm);
         }
-        
         try
         {
-            _auctionService.UpdateDescription(Id,vm.Description,CurrentUserName());
-            return Redirect("/Auctions/Details/" + Id);
+            auctionService.UpdateDescription(id, vm.Description, CurrentUserName());
+            return RedirectToAction(nameof(Details), new { id });
         }
         catch (AuctionException)
         {
             return NotFound();
         }
     }
-    
-    
+
+    // Rule violations are shown on the details page via TempData, since we redirect back to it.
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult PlaceBid(PlaceBidVm vm)
     {
         try
         {
-            _auctionService.PlaceBid(vm.AuctionId, vm.Amount, CurrentUserName());
+            auctionService.PlaceBid(vm.AuctionId, vm.Amount, CurrentUserName());
         }
         catch (AuctionException e)
         {
             TempData["Error"] = e.Message;
         }
-
-        return Redirect("/Auctions/Details/" + vm.AuctionId);
+        return RedirectToAction(nameof(Details), new { id = vm.AuctionId });
     }
-    
 }

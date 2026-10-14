@@ -1,5 +1,6 @@
 ﻿namespace AuctionApp.Core;
-// Oföränderlig eftersom ett lagt bud aldrig får ändras i efterhand.
+
+// Immutable because a placed bid must never change afterwards.
 public class Bid
 {
     public int Id { get; }
@@ -22,7 +23,7 @@ public class Bid
         PlacedAt = placedAt;
     }
 
-    // Bud från databasen som redan har ett id
+    // For bids loaded from the database, which already have an id.
     public Bid(int id, string userName, decimal amount, DateTime placedAt)
         : this(userName, amount, placedAt)
     {
