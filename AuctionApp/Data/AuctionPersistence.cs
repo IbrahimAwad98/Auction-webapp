@@ -20,7 +20,25 @@ public class AuctionPersistence : IAuctionPersistence
             .Where(a => a.EndTime > now)
             .OrderBy(a => a.EndTime)
             .ToList();
-        return ToAuctions(auctions);
+
+        if (auctions.Count == 0)
+        {
+            return new List<Auction>();
+        }
+
+        List<int> ids = auctions.Select(a => a.Id).ToList();
+
+        List<BidDb> highestBids = db.Bids
+            .Where(b => ids.Contains(b.AuctionId) &&
+                        !db.Bids.Any(other =>
+                            other.AuctionId == b.AuctionId &&
+                            other.Amount > b.Amount))
+            .ToList();
+
+        return auctions
+            .Select(a => ToAuction(a,
+                highestBids.Where(b => b.AuctionId == a.Id).ToList()))
+            .ToList();
     }
 
     public Auction? GetById(int auctionId)
@@ -44,10 +62,30 @@ public class AuctionPersistence : IAuctionPersistence
     {
         List<AuctionDb> auctions = db.Auctions
             .Where(a => a.EndTime > now &&
-                        db.Bids.Any(b => b.AuctionId == a.Id && b.UserName == userName))
+                        db.Bids.Any(b =>
+                            b.AuctionId == a.Id &&
+                            b.UserName == userName))
             .OrderBy(a => a.EndTime)
             .ToList();
-        return ToAuctions(auctions);
+
+        if (auctions.Count == 0)
+        {
+            return new List<Auction>();
+        }
+
+        List<int> ids = auctions.Select(a => a.Id).ToList();
+
+        List<BidDb> highestBids = db.Bids
+            .Where(b => ids.Contains(b.AuctionId) &&
+                        !db.Bids.Any(other =>
+                            other.AuctionId == b.AuctionId &&
+                            other.Amount > b.Amount))
+            .ToList();
+
+        return auctions
+            .Select(a => ToAuction(a,
+                highestBids.Where(b => b.AuctionId == a.Id).ToList()))
+            .ToList();
     }
 
     // The winner rule lives in Auction, so we load the candidates and let the domain decide.
