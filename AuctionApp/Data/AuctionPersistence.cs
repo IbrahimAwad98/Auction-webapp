@@ -55,12 +55,15 @@ public class AuctionPersistence : IAuctionPersistence
     {
         List<AuctionDb> auctions = db.Auctions
             .Where(a => a.EndTime <= now &&
-                        db.Bids.Any(b => b.AuctionId == a.Id && b.UserName == userName))
+                        db.Bids
+                            .Where(b => b.AuctionId == a.Id)
+                            .OrderByDescending(b => b.Amount)
+                            .Select(b => b.UserName)
+                            .FirstOrDefault() == userName)
             .OrderByDescending(a => a.EndTime)
             .ToList();
-        return ToAuctions(auctions)
-            .Where(a => a.Winner(now) == userName)
-            .ToList();
+
+        return ToAuctions(auctions);
     }
 
     public void Add(Auction auction)
