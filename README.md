@@ -22,6 +22,12 @@ Each layer only calls the layer directly below it, through an interface.
 
 <img src="docs/architecture.png" alt="Architecture" width="852">
 
+## Class diagram
+
+Controllers depend on `IAuctionService`, the service on `IAuctionPersistence`, and the data layer implements the Core interface, so dependencies point inwards. Business rules (bidding, winner) live in `Auction` and `Bid`.
+
+<img src="docs/class-diagram.png" alt="Class diagram" width="852">
+
 ## Project structure
 
 ```
