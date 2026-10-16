@@ -88,7 +88,8 @@ public class AuctionPersistence : IAuctionPersistence
             .ToList();
     }
 
-    // The winner rule lives in Auction, so we load the candidates and let the domain decide.
+    // The winner is decided in the query so only won auctions are loaded.
+    // Auction.Winner() still holds the rule for the details page.
     public List<Auction> GetEndedWonBy(string userName, DateTime now)
     {
         List<AuctionDb> auctions = db.Auctions
