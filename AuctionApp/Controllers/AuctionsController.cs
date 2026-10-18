@@ -50,7 +50,7 @@ public class AuctionsController : Controller
         try
         {
             Auction auction = auctionService.GetAuctionDetails(id);
-            return View(AuctionDetailsVm.FromAuction(auction, CurrentUserName()));
+            return View(AuctionDetailsVm.FromAuction(auction, CurrentUserName(), DateTime.Now));
         }
         catch (AuctionException)
         {

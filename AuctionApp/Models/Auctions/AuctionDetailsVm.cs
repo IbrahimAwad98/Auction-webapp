@@ -14,9 +14,11 @@ public class AuctionDetailsVm
     public decimal CurrentPrice { get; set; }
     public DateTime EndTime { get; set; }
     public bool IsOwner { get; set; }
+    public bool IsActive { get; set; }
+    public string? Winner { get; set; }
     public List<BidVm> Bids { get; set; } = new List<BidVm>();
 
-    public static AuctionDetailsVm FromAuction(Auction auction, string userName)
+    public static AuctionDetailsVm FromAuction(Auction auction, string userName, DateTime now)
     {
         return new AuctionDetailsVm
         {
@@ -28,6 +30,8 @@ public class AuctionDetailsVm
             CurrentPrice = auction.CurrentPrice(),
             EndTime = auction.EndTime,
             IsOwner = auction.IsOwnedBy(userName),
+            IsActive = auction.IsActive(now),
+            Winner = auction.Winner(now),
             // Highest bid first, which is how the page lists them.
             Bids = auction.GetBids()
                 .OrderByDescending(bid => bid.Amount)

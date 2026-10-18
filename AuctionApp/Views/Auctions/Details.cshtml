@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = Model.Name;
-    bool ended = Model.EndTime <= DateTime.Now;
+    bool ended = !Model.IsActive;
 }
 
 <div class="page-header">
@@ -78,7 +78,9 @@
             <p class="price-meta num">
                 @if (ended)
                 {
-                    <span class="status ended">Ended</span>
+                    <span class="status ended">
+                        @(Model.Winner == null ? "The auction ended without any bids." : $"Winner: {Model.Winner}")
+                    </span>
                 }
                 else
                 {
