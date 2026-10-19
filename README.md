@@ -16,15 +16,15 @@ Lab 2 in the course *HI1031 Distributed Information Systems* at KTH Royal Instit
 - List active auctions you have bid on
 - List ended auctions you have won
 
+## Demo
+
+https://github.com/user-attachments/assets/628e2dad-8dad-42b7-b5c3-afd92416ad8d
+
 ## Architecture
 
 Each layer only calls the layer directly below it, through an interface.
 
 <img src="docs/architecture.png" alt="Architecture" width="852">
-
-## Demo
-
-https://github.com/user-attachments/assets/628e2dad-8dad-42b7-b5c3-afd92416ad8d
 
 ## Project structure
 
