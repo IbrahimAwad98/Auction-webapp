@@ -27,7 +27,9 @@ https://github.com/user-attachments/assets/628e2dad-8dad-42b7-b5c3-afd92416ad8d
 
 Each layer only calls the layer directly below it, through an interface.
 
-<img src="docs/architecture.png" alt="Architecture" width="852">
+<p align="center">
+  <img src="docs/architecture.svg" alt="Architecture" width="650">
+</p>
 
 ## Project structure
 
