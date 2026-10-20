@@ -15,6 +15,9 @@ Lab 2 in the course *HI1031 Distributed Information Systems* at KTH Royal Instit
 - Place a bid on someone else's active auction (must be higher than the current price)
 - List active auctions you have bid on
 - List ended auctions you have won
+  
+### Grade 4
+- Generic repository in the data layer
 
 ## Demo
 
