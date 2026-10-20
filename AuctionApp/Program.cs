@@ -18,6 +18,7 @@ builder.Services.AddDbContext<AppIdentityDbContext>(options =>
                      ?? throw new InvalidOperationException("IdentityDbConnection is missing.")));
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppIdentityDbContext>();
 
 // Dependency injection: which implementation is used for each interface.
@@ -25,6 +26,9 @@ builder.Services.AddScoped<IAuctionService, AuctionService>();
 builder.Services.AddScoped<IAuctionPersistence, AuctionPersistence>();
 
 var app = builder.Build();
+
+await AuctionApp.Data.Identity.IdentitySeeder.
+    SeedAdminAsync(app.Services, app.Configuration);
 
 if (!app.Environment.IsDevelopment())
 {
