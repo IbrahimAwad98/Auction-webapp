@@ -19,6 +19,12 @@ Lab 2 in the course *HI1031 Distributed Information Systems* at KTH Royal Instit
 ### Grade 4
 - Generic repository in the data layer
 
+### Grade 5
+- Admin role in Identity and an admin account created at startup
+- Admin: list information about all users
+- Admin: list all auctions for a given user
+- Admin: delete a user or an auction
+
 ## Demo
 
 https://github.com/user-attachments/assets/628e2dad-8dad-42b7-b5c3-afd92416ad8d
