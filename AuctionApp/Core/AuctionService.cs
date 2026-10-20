@@ -28,6 +28,11 @@ public class AuctionService : IAuctionService
         return persistence.GetEndedWonBy(userName, DateTime.Now);
     }
 
+    public List<Auction> ListAuctionsOwnedBy(string userName)
+    {
+        return persistence.GetByOwner(userName);
+    }
+
     // Ended auctions are returned too, so won auctions can still be viewed.
     public Auction GetAuctionDetails(int auctionId)
     {
@@ -66,5 +71,15 @@ public class AuctionService : IAuctionService
                           ?? throw new AuctionException("The auction does not exist.");
         Bid bid = auction.PlaceBid(userName, amount, DateTime.Now);
         persistence.AddBid(auctionId, bid);
+    }
+
+    public void DeleteAuction(int auctionId)
+    {
+        Auction? auction = persistence.GetById(auctionId);
+        if (auction == null)
+        {
+            throw new AuctionException("Auction not found.");
+        }
+        persistence.Delete(auctionId);
     }
 }
