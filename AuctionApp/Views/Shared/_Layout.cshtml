@@ -1,3 +1,4 @@
+@using AuctionApp.Data.Identity
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,6 +23,10 @@
                 <li><a class="@Active("Auctions", "MyBids")" asp-controller="Auctions" asp-action="MyBids">My bids</a></li>
                 <li><a class="@Active("Auctions", "Won")" asp-controller="Auctions" asp-action="Won">Won</a></li>
                 <li><a class="@Active("Home", "About")" asp-controller="Home" asp-action="About">About</a></li>
+                @if (User.IsInRole(IdentitySeeder.AdminRole))
+                {
+                    <li><a class="@Active("AdminUsers", "Index")" asp-controller="AdminUsers" asp-action="Index">Admin</a></li>
+                }
             </ul>
         </nav>
         <partial name="_LoginPartial" />
