@@ -27,7 +27,7 @@ Lab 2 in the course *HI1031 Distributed Information Systems* at KTH Royal Instit
 
 ## Demo
 
-https://github.com/user-attachments/assets/628e2dad-8dad-42b7-b5c3-afd92416ad8d
+https://github.com/user-attachments/assets/fc9d1311-e2a3-4267-aeb5-5d3ed954aea8
 
 ## Architecture
 
