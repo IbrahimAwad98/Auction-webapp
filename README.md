@@ -44,17 +44,20 @@ Auction-webapp/
 ├── docs/                       Architecture and database diagrams, database setup script
 ├── AuctionApp/
 │   ├── Areas/Identity/Pages/   Layout shim so the Identity UI pages use the app layout
-│   ├── Controllers/            AuctionsController, HomeController
+│   ├── Controllers/            AuctionsController, HomeController, AdminUsersController, AdminAuctionsController
 │   ├── Core/                   Auction, Bid, AuctionException, AuctionService
 │   │   └── Interfaces/         IAuctionService, IAuctionPersistence
 │   ├── Data/                   AuctionDb, BidDb, AuctionDbContext, AuctionPersistence, ...
+│   │   ├── Identity/           IdentitySeeder (creates the Admin role and admin account at startup)
 │   │   ├── Migrations/Identity EF Core migrations for the Identity database
 │   │   └── Repositories/       IRepository, Repository (generic repository over EF Core)
 │   ├── Migrations/             EF Core migrations for the auction database
-│   ├── Models/Auctions/        View models: AuctionVm, AuctionDetailsVm, CreateAuctionVm, ...
-│   ├── Views/                  Auctions (Index, Details, Create, Edit, MyBids, Won), Home, Shared
+│   ├── Models/                 View models
+│   │   ├── Auctions/           AuctionVm, AuctionDetailsVm, CreateAuctionVm, ...
+│   │   └── Admin/              AdminUserVm, AdminAuctionVm, AdminUserAuctionsVm
+│   ├── Views/                  Auctions (Index, Details, Create, Edit, MyBids, Won), AdminUsers, AdminAuctions, Home, Shared
 │   ├── wwwroot/css/site.css    Styling
-│   ├── appsettings.json        Connection strings for the two databases (password in user secrets)
+│   ├── appsettings.json        Connection strings for the two databases (password and admin credentials in user secrets)
 │   └── Program.cs              Dependency injection and request pipeline
 └── AuctionApp.sln
 ```
