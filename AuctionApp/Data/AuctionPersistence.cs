@@ -1,156 +1,195 @@
 using AuctionApp.Core;
 using AuctionApp.Core.Interfaces;
+using AuctionApp.Data.Repositories;
 
 namespace AuctionApp.Data;
 
-// Translates between the EF entities (AuctionDb, BidDb) and the domain objects,
-// so Core never depends on Entity Framework.
+// Implements the persistence interface that Core owns.
+// All database access goes through the generic repository, one per entity type.
+// EF classes (AuctionDb, BidDb) never leave this class: everything returned is Auction/Bid.
 public class AuctionPersistence : IAuctionPersistence
 {
-    private readonly AuctionDbContext db;
-
+    private readonly IRepository<AuctionDb> _auctions;
+    private readonly IRepository<BidDb> _bids;
+    
     public AuctionPersistence(AuctionDbContext db)
     {
-        this.db = db;
+        _auctions = new Repository<AuctionDb>(db);
+        _bids = new Repository<BidDb>(db);
     }
-
+    
     public List<Auction> GetActive(DateTime now)
     {
-        List<AuctionDb> auctions = db.Auctions
+        
+        IQueryable<BidDb> bids = _bids.Query();
+
+        var rows = _auctions.Query()
             .Where(a => a.EndTime > now)
             .OrderBy(a => a.EndTime)
+            .Select(a => new
+            {
+                Auction = a,
+                HighestBid = bids
+                    .Where(b => b.AuctionId == a.Id)
+                    .OrderByDescending(b => b.Amount)
+                    .FirstOrDefault()
+            })
             .ToList();
 
-        if (auctions.Count == 0)
+        List<Auction> result = new List<Auction>();
+        foreach (var row in rows)
         {
-            return new List<Auction>();
+            result.Add(ToAuction(row.Auction, row.HighestBid));
         }
-
-        List<int> ids = auctions.Select(a => a.Id).ToList();
-
-        List<BidDb> highestBids = db.Bids
-            .Where(b => ids.Contains(b.AuctionId) &&
-                        !db.Bids.Any(other =>
-                            other.AuctionId == b.AuctionId &&
-                            other.Amount > b.Amount))
-            .ToList();
-
-        return auctions
-            .Select(a => ToAuction(a,
-                highestBids.Where(b => b.AuctionId == a.Id).ToList()))
-            .ToList();
+        return result;
     }
-
-    public Auction? GetById(int auctionId)
+    
+    public Auction? GetById(int id)
     {
-        AuctionDb? auction = db.Auctions.FirstOrDefault(a => a.Id == auctionId);
-        return auction == null ? null : ToAuction(auction, new List<BidDb>());
-    }
-
-    public Auction? GetByIdWithBids(int auctionId)
-    {
-        AuctionDb? auction = db.Auctions.FirstOrDefault(a => a.Id == auctionId);
-        if (auction == null)
+        AuctionDb? entity = _auctions.GetById(id);
+        if (entity == null)
         {
             return null;
         }
-        List<BidDb> bids = db.Bids.Where(b => b.AuctionId == auctionId).ToList();
-        return ToAuction(auction, bids);
+        return ToAuction(entity, new List<BidDb>());
     }
-
-    public List<Auction> GetActiveWithBidBy(string userName, DateTime now)
+    
+    public Auction? GetByIdWithBids(int id)
     {
-        List<AuctionDb> auctions = db.Auctions
-            .Where(a => a.EndTime > now &&
-                        db.Bids.Any(b =>
-                            b.AuctionId == a.Id &&
-                            b.UserName == userName))
-            .OrderBy(a => a.EndTime)
-            .ToList();
-
-        if (auctions.Count == 0)
+        AuctionDb? entity = _auctions.GetById(id);
+        if (entity == null)
         {
-            return new List<Auction>();
+            return null;
         }
 
-        List<int> ids = auctions.Select(a => a.Id).ToList();
-
-        List<BidDb> highestBids = db.Bids
-            .Where(b => ids.Contains(b.AuctionId) &&
-                        !db.Bids.Any(other =>
-                            other.AuctionId == b.AuctionId &&
-                            other.Amount > b.Amount))
+        List<BidDb> bidRows = _bids.Query()
+            .Where(b => b.AuctionId == id)
             .ToList();
 
-        return auctions
-            .Select(a => ToAuction(a,
-                highestBids.Where(b => b.AuctionId == a.Id).ToList()))
+        return ToAuction(entity, bidRows);
+    }
+    
+    public List<Auction> GetActiveWithBidBy(string userName, DateTime now)
+    {
+        IQueryable<BidDb> bids = _bids.Query();
+
+        var rows = _auctions.Query()
+            .Where(a => a.EndTime > now
+                        && bids.Any(b => b.AuctionId == a.Id && b.UserName == userName))
+            .OrderBy(a => a.EndTime)
+            .Select(a => new
+            {
+                Auction = a,
+                HighestBid = bids
+                    .Where(b => b.AuctionId == a.Id)
+                    .OrderByDescending(b => b.Amount)
+                    .FirstOrDefault()
+            })
             .ToList();
+
+        List<Auction> result = new List<Auction>();
+        foreach (var row in rows)
+        {
+            result.Add(ToAuction(row.Auction, row.HighestBid));
+        }
+        return result;
     }
 
-    // The winner is decided in the query so only won auctions are loaded.
-    // Auction.Winner() still holds the rule for the details page.
     public List<Auction> GetEndedWonBy(string userName, DateTime now)
     {
-        List<AuctionDb> auctions = db.Auctions
-            .Where(a => a.EndTime <= now &&
-                        db.Bids
-                            .Where(b => b.AuctionId == a.Id)
-                            .OrderByDescending(b => b.Amount)
-                            .Select(b => b.UserName)
-                            .FirstOrDefault() == userName)
+        IQueryable<BidDb> bids = _bids.Query();
+
+        var rows = _auctions.Query()
+            .Where(a => a.EndTime <= now
+                        && bids.Where(b => b.AuctionId == a.Id)
+                               .OrderByDescending(b => b.Amount)
+                               .Select(b => b.UserName)
+                               .FirstOrDefault() == userName)
             .OrderByDescending(a => a.EndTime)
+            .Select(a => new
+            {
+                Auction = a,
+                HighestBid = bids
+                    .Where(b => b.AuctionId == a.Id)
+                    .OrderByDescending(b => b.Amount)
+                    .FirstOrDefault()
+            })
             .ToList();
 
-        return ToAuctions(auctions);
+        List<Auction> result = new List<Auction>();
+        foreach (var row in rows)
+        {
+            result.Add(ToAuction(row.Auction, row.HighestBid));
+        }
+        return result;
     }
-
+    
     public void Add(Auction auction)
     {
-        db.Auctions.Add(new AuctionDb
+        AuctionDb entity = new AuctionDb
         {
             Name = auction.Name,
             Description = auction.Description,
             OwnerUserName = auction.OwnerUserName,
             StartingPrice = auction.StartingPrice,
             EndTime = auction.EndTime
-        });
-        db.SaveChanges();
+        };
+
+        _auctions.Add(entity);
+        _auctions.SaveChanges();
     }
 
-    public void UpdateDescription(int auctionId, string newDescription)
+    public void UpdateDescription(int auctionId, string description)
     {
-        AuctionDb auction = db.Auctions.FirstOrDefault(a => a.Id == auctionId)
-                            ?? throw new KeyNotFoundException("Auction not found.");
-        auction.Description = newDescription;
-        db.SaveChanges();
-    }
+        AuctionDb? entity = _auctions.GetById(auctionId);
+        if (entity == null)
+        {
+            throw new AuctionException("Auction not found.");
+        }
 
+        entity.Description = description; 
+        _auctions.SaveChanges();
+    }
+    
     public void AddBid(int auctionId, Bid bid)
     {
-        db.Bids.Add(new BidDb
+        BidDb entity = new BidDb
         {
-            AuctionId = auctionId,
+            AuctionId = auctionId,   
             UserName = bid.UserName,
             Amount = bid.Amount,
             PlacedAt = bid.PlacedAt
-        });
-        db.SaveChanges();
-    }
+        };
 
-    // One query for all bids instead of one per auction.
-    private List<Auction> ToAuctions(List<AuctionDb> auctions)
-    {
-        List<int> ids = auctions.Select(a => a.Id).ToList();
-        List<BidDb> bids = db.Bids.Where(b => ids.Contains(b.AuctionId)).ToList();
-        return auctions
-            .Select(a => ToAuction(a, bids.Where(b => b.AuctionId == a.Id).ToList()))
-            .ToList();
+        _bids.Add(entity);
+        _bids.SaveChanges();
     }
-
-    private static Auction ToAuction(AuctionDb a, List<BidDb> bids)
+    
+    private static Auction ToAuction(AuctionDb entity, BidDb? highestBid)
     {
-        return new Auction(a.Id, a.Name, a.Description, a.OwnerUserName, a.StartingPrice, a.EndTime,
-            bids.Select(b => new Bid(b.Id, b.UserName, b.Amount, b.PlacedAt)).ToList());
+        List<BidDb> bidRows = new List<BidDb>();
+        if (highestBid != null)
+        {
+            bidRows.Add(highestBid);
+        }
+        return ToAuction(entity, bidRows);
+    }
+    
+    private static Auction ToAuction(AuctionDb entity, List<BidDb> bidRows)
+    {
+        List<Bid> bids = new List<Bid>();
+        foreach (BidDb row in bidRows)
+        {
+            bids.Add(new Bid(row.Id, row.UserName, row.Amount, row.PlacedAt));
+        }
+
+        return new Auction(
+            entity.Id,
+            entity.Name,
+            entity.Description,
+            entity.OwnerUserName,
+            entity.StartingPrice,
+            entity.EndTime,
+            bids);
     }
 }
