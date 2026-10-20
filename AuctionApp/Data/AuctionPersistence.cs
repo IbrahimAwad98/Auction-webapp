@@ -20,28 +20,17 @@ public class AuctionPersistence : IAuctionPersistence
     
     public List<Auction> GetActive(DateTime now)
     {
-        
-        IQueryable<BidDb> bids = _bids.Query();
-
-        var rows = _auctions.Query()
+        return LoadWithHighestBid(_auctions.Query()
             .Where(a => a.EndTime > now)
-            .OrderBy(a => a.EndTime)
-            .Select(a => new
-            {
-                Auction = a,
-                HighestBid = bids
-                    .Where(b => b.AuctionId == a.Id)
-                    .OrderByDescending(b => b.Amount)
-                    .FirstOrDefault()
-            })
-            .ToList();
+            .OrderBy(a => a.EndTime));
+    }
 
-        List<Auction> result = new List<Auction>();
-        foreach (var row in rows)
-        {
-            result.Add(ToAuction(row.Auction, row.HighestBid));
-        }
-        return result;
+    // Admin view: every auction a user has created, ended ones included.
+    public List<Auction> GetByOwner(string userName)
+    {
+        return LoadWithHighestBid(_auctions.Query()
+            .Where(a => a.OwnerUserName == userName)
+            .OrderByDescending(a => a.EndTime));
     }
     
     public Auction? GetById(int id)
@@ -73,55 +62,23 @@ public class AuctionPersistence : IAuctionPersistence
     {
         IQueryable<BidDb> bids = _bids.Query();
 
-        var rows = _auctions.Query()
+        return LoadWithHighestBid(_auctions.Query()
             .Where(a => a.EndTime > now
                         && bids.Any(b => b.AuctionId == a.Id && b.UserName == userName))
-            .OrderBy(a => a.EndTime)
-            .Select(a => new
-            {
-                Auction = a,
-                HighestBid = bids
-                    .Where(b => b.AuctionId == a.Id)
-                    .OrderByDescending(b => b.Amount)
-                    .FirstOrDefault()
-            })
-            .ToList();
-
-        List<Auction> result = new List<Auction>();
-        foreach (var row in rows)
-        {
-            result.Add(ToAuction(row.Auction, row.HighestBid));
-        }
-        return result;
+            .OrderBy(a => a.EndTime));
     }
 
     public List<Auction> GetEndedWonBy(string userName, DateTime now)
     {
         IQueryable<BidDb> bids = _bids.Query();
 
-        var rows = _auctions.Query()
+        return LoadWithHighestBid(_auctions.Query()
             .Where(a => a.EndTime <= now
                         && bids.Where(b => b.AuctionId == a.Id)
                                .OrderByDescending(b => b.Amount)
                                .Select(b => b.UserName)
                                .FirstOrDefault() == userName)
-            .OrderByDescending(a => a.EndTime)
-            .Select(a => new
-            {
-                Auction = a,
-                HighestBid = bids
-                    .Where(b => b.AuctionId == a.Id)
-                    .OrderByDescending(b => b.Amount)
-                    .FirstOrDefault()
-            })
-            .ToList();
-
-        List<Auction> result = new List<Auction>();
-        foreach (var row in rows)
-        {
-            result.Add(ToAuction(row.Auction, row.HighestBid));
-        }
-        return result;
+            .OrderByDescending(a => a.EndTime));
     }
     
     public void Add(Auction auction)
@@ -163,6 +120,44 @@ public class AuctionPersistence : IAuctionPersistence
 
         _bids.Add(entity);
         _bids.SaveChanges();
+    }
+
+    // Bids are removed by the database: the FK Bids.AuctionId has ON DELETE CASCADE.
+    public void Delete(int auctionId)
+    {
+        AuctionDb? entity = _auctions.GetById(auctionId);
+        if (entity == null)
+        {
+            throw new AuctionException("Auction not found.");
+        }
+
+        _auctions.Remove(entity);
+        _auctions.SaveChanges();
+    }
+
+    // Runs the query and joins in each auction's highest bid, so list pages can show
+    // the current price without loading every bid.
+    private List<Auction> LoadWithHighestBid(IQueryable<AuctionDb> query)
+    {
+        IQueryable<BidDb> bids = _bids.Query();
+
+        var rows = query
+            .Select(a => new
+            {
+                Auction = a,
+                HighestBid = bids
+                    .Where(b => b.AuctionId == a.Id)
+                    .OrderByDescending(b => b.Amount)
+                    .FirstOrDefault()
+            })
+            .ToList();
+
+        List<Auction> result = new List<Auction>();
+        foreach (var row in rows)
+        {
+            result.Add(ToAuction(row.Auction, row.HighestBid));
+        }
+        return result;
     }
     
     private static Auction ToAuction(AuctionDb entity, BidDb? highestBid)
