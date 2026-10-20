@@ -1,0 +1,53 @@
+﻿@model AuctionApp.Models.Admin.AdminUserAuctionsVm
+@{
+    ViewData["Title"] = "Auctions by " + Model.UserName;
+}
+
+<h1>Auctions by @Model.UserName</h1>
+<p><a asp-controller="AdminUsers" asp-action="Index">&larr; Back to users</a></p>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+
+@if (Model.Auctions.Count == 0)
+{
+    <p>This user has no auctions.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Current price</th>
+            <th>Ends</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var auction in Model.Auctions)
+        {
+            <tr>
+                <td>@auction.Name</td>
+                <td>@auction.CurrentPrice.ToString("N2") kr</td>
+                <td>@auction.EndTime.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>@(auction.IsActive ? "Active" : "Ended")</td>
+                <td>
+                    <form asp-action="Delete" asp-route-id="@auction.Id" asp-route-userName="@Model.UserName"
+                          method="post" class="d-inline"
+                          onsubmit="return confirm('Delete @auction.Name?');">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
