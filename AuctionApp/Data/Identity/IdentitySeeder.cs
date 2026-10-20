@@ -40,7 +40,12 @@ public static class IdentitySeeder
                     "Could not create admin: " + string.Join(", ", result.Errors.Select(e => e.Description)));
             }
         }
-        
+        else if (!await userManager.CheckPasswordAsync(admin, password))
+        {
+            // Someone registered the admin email before the seeder ran. Never promote that account.
+            throw new InvalidOperationException("Admin email is already registered by another account.");
+        }
+
         if (!await userManager.IsInRoleAsync(admin, AdminRole))
         {
             await userManager.AddToRoleAsync(admin, AdminRole);
