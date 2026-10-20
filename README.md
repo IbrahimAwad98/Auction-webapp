@@ -42,7 +42,8 @@ Auction-webapp/
 │   ├── Core/                   Auction, Bid, AuctionException, AuctionService
 │   │   └── Interfaces/         IAuctionService, IAuctionPersistence
 │   ├── Data/                   AuctionDb, BidDb, AuctionDbContext, AuctionPersistence, ...
-│   │   └── Migrations/Identity EF Core migrations for the Identity database
+│   │   ├── Migrations/Identity EF Core migrations for the Identity database
+│   │   └── Repositories/       IRepository, Repository (generic repository over EF Core)
 │   ├── Migrations/             EF Core migrations for the auction database
 │   ├── Models/Auctions/        View models: AuctionVm, AuctionDetailsVm, CreateAuctionVm, ...
 │   ├── Views/                  Auctions (Index, Details, Create, Edit, MyBids, Won), Home, Shared
